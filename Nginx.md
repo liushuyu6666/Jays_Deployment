@@ -26,9 +26,9 @@
         ```shell
         apt-get purge nginx nginx-common `nginx-full`
         ```
-         - `purge` means that not only the package will be removed, but also all configuration files and data associated with that package will be deleted from the system. This ensures a complete and clean removal of the package, leaving no traces of its existence on your system.
-         - The `nginx-common` package contains shared files and directories that are used by all Nginx flavors (variants). It includes configuration files, default server configurations, and other common files that are shared among different Nginx packages. When you uninstall `nginx`, it's a good practice to remove `nginx-common` as well to clean up any shared files or configuration remnants.
-         - The `nginx-full` package is one of the Nginx flavors available. In Debian-based systems, the Nginx package is divided into different flavors to provide users with various installation options. The `nginx-full` package includes more features and modules compared to the nginx package. It may include additional modules for extended functionality. If you installed `nginx-full` previously, it includes everything from the nginx package as well. Uninstalling `nginx-full` will remove this flavor of Nginx, along with its additional features and modules.
+        - `purge` means that not only the package will be removed, but also all configuration files and data associated with that package will be deleted from the system. This ensures a complete and clean removal of the package, leaving no traces of its existence on your system.
+        - The `nginx-common` package contains shared files and directories that are used by all Nginx flavors (variants). It includes configuration files, default server configurations, and other common files that are shared among different Nginx packages. When you uninstall `nginx`, it's a good practice to remove `nginx-common` as well to clean up any shared files or configuration remnants.
+        - The `nginx-full` package is one of the Nginx flavors available. In Debian-based systems, the Nginx package is divided into different flavors to provide users with various installation options. The `nginx-full` package includes more features and modules compared to the nginx package. It may include additional modules for extended functionality. If you installed `nginx-full` previously, it includes everything from the nginx package as well. Uninstalling `nginx-full` will remove this flavor of Nginx, along with its additional features and modules.
 
 
 4. Collision:
@@ -42,6 +42,37 @@
     sudo service apache2 stop
     ```
 
+5. Firewall:
+    Sometimes we need to enable Nginx through `ufw` as well.
+    1. Enable `ufw`:
+        ```shell
+        sudo ufw enable
+        ```
+    2. List the application configurations that `ufw` knows.
+        ```shell
+        sudo ufw app list
+        ```
+        You will get an output
+        ```txt
+        Output
+        Available applications:
+        Nginx Full
+        Nginx HTTP
+        Nginx HTTPS
+        OpenSSH
+        ```
+        - Nginx Full: This profile opens both port 80 (normal, unencrypted web traffic) and port 443 (TLS/SSL encrypted traffic)
+        - Nginx HTTP: This profile opens only port 80 (normal, unencrypted web traffic)
+        - Nginx HTTPS: This profile opens only port 443 (TLS/SSL encrypted traffic)
+    3. Enable the traffic.
+        ```shell
+        sudo ufw allow 'Nginx HTTP'
+        ```
+    4. Check the `ufw`'s status
+        ```shell
+        sudo ufw status
+        ```
+
 # Deployment
 ## Ubuntu
 After installing Nginx, the file `/var/www/html/index.html` is considered the default entry file. To deploy your React project or any other frontend server, it is recommended to move the `build/` folder to the same directory `/var/www/html/`. Next, navigate to the configuration file located at `/etc/nginx/sites-available/default` and update the `root` directive to point to your `build/` folder. The modified `root` directive should look like this:
@@ -51,3 +82,4 @@ server {
     root /var/www/html/build;
 }
 ```
+
