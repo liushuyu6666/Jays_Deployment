@@ -25,37 +25,49 @@ Deploying a Spring Boot project involves two vital components: a build automatio
    1. Navigate to your project's root directory containing the `gradlew` script.
    2. Determine your project's Gradle version using:
     ```bash
-        ./gradlew --version
+    ./gradlew --version
     ```
-   3. Check server's Gradle version with `gradle -v`.
+   3. Check server's Gradle version:
+    ```bash
+    gradle -v
+    ```
 2. Upgrade Gradle (if needed):
    1. Use the following commands to upgrade Gradle:
     ```bash
-        curl -s "https://get.sdkman.io" | bash
-        source "$HOME/.sdkman/bin/sdkman-init.sh"
-        sdk install gradle <version>
+    curl -s "https://get.sdkman.io" | bash
+    source "$HOME/.sdkman/bin/sdkman-init.sh"
+    sdk install gradle <version>
     ```
    2. After upgrade, update the Gradle version in scripts:
     ```bash
-        ./gradlew wrapper --gradle-version <version>
+    ./gradlew wrapper --gradle-version <version>
     ```
 3. Verify JDK Compatibility:
    1. Check `sourceCompatibility` in `build.gradle` for required JDK version of the project.
-   2. Use `apt search openjdk` or `java -version` to check server's Java version.
+   2. Use
+    ```bash
+    apt search openjdk
+    java -version
+    ```
+    to check server's Java version.
 4. Install OpenJDK:
    1. Install the required OpenJDK version (e.g., OpenJDK 19):
     ```bash
-        sudo apt install openjdk-19-jdk
+    sudo apt install openjdk-19-jdk
     ```
    2. Optional: If needed, uninstall an old JDK version:
     ```bash
-        sudo apt remove --purge openjdk-11-jdk
-        sudo apt autoremove
+    sudo apt remove --purge openjdk-11-jdk
+    sudo apt autoremove
     ```
 
 ### Build the project
 1. Open a terminal and navigate to the project's root directory.
-2. Execute the command `gradle build` to initiate the build process.
+2. Execute the command
+    ```bash
+    gradle build
+    ```
+    to initiate the build process.
 3. Upon successful completion, the compiled JAR or WAR file will reside in the `build/libs` directory within your project folder.
 4. Locate the compiled JAR/WAR file. By default, it might be named `demo-0.0.1-SNAPSHOT.jar`.
 5. Optionally, move the JAR/WAR file to your preferred deployment location.
@@ -65,12 +77,12 @@ Deploying a Spring Boot project involves two vital components: a build automatio
 Before running the project, ensure proper execution permissions are granted. Follow these steps:
 1. Check Permissions: In the terminal, navigate to your project's directory and use the command:
     ```bash
-        ls -l <Your_JAR_Package_Name>
+    ls -l <Your_JAR_Package_Name>
     ```
     Observe the permission string in the output. If it appears as `-rwxrwxr--`, execution permission is absent.
 2. Grant Permission: To allow execution, use the command:
     ```bash
-        chmod +x <Your_JAR_Package_Name>
+    chmod +x <Your_JAR_Package_Name>
     ```
 3. Verify Permission: Confirm the updated permission string, now displayed as `-rwxrwxr-x`, indicating execution access.
 
@@ -79,12 +91,12 @@ To start the Spring Boot server in the background as a daemon process, follow th
 1. Navigate to the project directory containing the JAR file using the terminal.
 2. Run the following command:
     ```bash
-        nohup java -jar demo-0.0.1-SNAPSHOT.jar > output.log &
+    nohup java -jar demo-0.0.1-SNAPSHOT.jar > output.log &
     ```
     This will start the server in the background and create an `output.log` file to capture the server's output.
 3. To monitor the server logs in real-time, use the command:
     ```bash
-        tail -f output.log
+    tail -f output.log
     ```
     This will display the log output as it's being written to the file.
 
@@ -98,8 +110,25 @@ sudo lsof -i :8080
 ### Install Database
 Since we are using MongoDB, we should install MongoDB:
    1. Follow [the official instruction](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/) for installing MongoDB on Ubuntu.
-   2. Start MongoDB using the command: `sudo systemctl start mongod`.
-   3. Check the status of MongoDB using the command: `sudo systemctl status mongod`.
-   4. Enable MongoDB to run on system boot with the command: `sudo systemctl enable mongod`.
+   2. Start MongoDB using the command:
+    ```bash
+    sudo systemctl start mongod
+    ```
+    or
+    ```bash
+    sudo service mongod start
+    ```
+   3. Check the status of MongoDB using the command:
+    ```bash
+    sudo systemctl status mongod
+    ```
+    or
+    ```bash
+    sudo service mongod status
+    ```
+   4. Enable MongoDB to run on system boot with the command:
+    ```bash
+    sudo systemctl enable mongod
+    ```
 
    
