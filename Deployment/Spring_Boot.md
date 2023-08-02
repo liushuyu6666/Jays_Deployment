@@ -8,7 +8,7 @@
     - [Launch the project](#launch-the-project)
     - [Check the status](#check-the-status)
   - [Other peripherals](#other-peripherals)
-    - [Install Database](#install-database)
+    - [Install MongoDB](#install-mongodb)
 
 
 # Overview
@@ -107,28 +107,28 @@ sudo lsof -i :8080
 ```
 
 ## Other peripherals
-### Install Database
+### Install MongoDB
 Since we are using MongoDB, we should install MongoDB:
-   1. Follow [the official instruction](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/) for installing MongoDB on Ubuntu.
-   2. Start MongoDB using the command:
-    ```bash
-    sudo systemctl start mongod
-    ```
-    or
-    ```bash
-    sudo service mongod start
-    ```
-   3. Check the status of MongoDB using the command:
-    ```bash
-    sudo systemctl status mongod
-    ```
-    or
-    ```bash
-    sudo service mongod status
-    ```
-   4. Enable MongoDB to run on system boot with the command:
-    ```bash
-    sudo systemctl enable mongod
-    ```
+1. Follow [the official instruction](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/) for installing MongoDB on Ubuntu.
+2. Once installed, start the MongoDB service with the following command:
+ ```bash
+ sudo systemctl start mongod
+ ```
+ or
+ ```bash
+ sudo service mongod start
+ ```
+3. Check the status of MongoDB using the command:
+ ```bash
+ sudo systemctl status mongod
+ ```
+ or
+ ```bash
+ sudo service mongod status
+ ```
+4. Enable MongoDB to run on system boot with the command:
+ ```bash
+ sudo systemctl enable mongod
+ ```
 
    
